@@ -1,0 +1,6 @@
+.idea
+*.iml
+
+node_modules
+
+template-generated.yaml
