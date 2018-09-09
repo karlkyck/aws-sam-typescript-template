@@ -4,14 +4,13 @@
   "private": true,
   "scripts": {
     "lint": "tslint --project tsconfig.json -c tslint.json 'src/**/*.ts'",
-    "test": "jest --ci",
-    "build": "npm run clean && npm run lint && tsc && npm run test && copy-node-modules . dist",
+    "test": "snyk test && jest --ci",
+    "build": "npm run clean $$ npm audit && npm run lint && tsc && npm run test && copy-node-modules . dist",
     "package": "aws cloudformation package --template-file template.yaml --s3-bucket $npm_package_name --output-template-file template-generated.yaml",
     "deploy": "aws cloudformation deploy --template-file template-generated.yaml --stack-name $npm_package_name --capabilities CAPABILITY_IAM",
     "clean": "rm -rf -v dist/*"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/aws-lambda": "^8.10.11",
     "@types/jest": "^23.3.1",
@@ -26,7 +25,8 @@
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.14.0",
     "tslint-config-standard": "^7.1.0",
-    "typescript": "^3.0.1"
+    "typescript": "^3.0.1",
+    "snyk": "^1.95.1"
   },
   "jest": {
     "testEnvironment": "node",
