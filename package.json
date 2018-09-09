@@ -1,14 +1,15 @@
 {
   "name": "aws-sam-typescript-template",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
+  "license": "MIT",
   "scripts": {
-    "lint": "tslint --project tsconfig.json -c tslint.json 'src/**/*.ts'",
-    "test": "snyk test && jest --ci",
-    "build": "npm run clean $$ npm audit && npm run lint && tsc && npm run test && copy-node-modules . dist",
-    "package": "aws cloudformation package --template-file template.yaml --s3-bucket $npm_package_name --output-template-file template-generated.yaml",
+    "build": "npm run clean $$ npm run lint && tsc && npm run test && copy-node-modules . dist",
+    "clean": "rm -rf -v dist/*",
     "deploy": "aws cloudformation deploy --template-file template-generated.yaml --stack-name $npm_package_name --capabilities CAPABILITY_IAM",
-    "clean": "rm -rf -v dist/*"
+    "lint": "tslint --project tsconfig.json -c tslint.json 'src/**/*.ts'",
+    "package": "aws cloudformation package --template-file template.yaml --s3-bucket $npm_package_name --output-template-file template-generated.yaml",
+    "test": "npm audit && snyk test && jest --ci"
   },
   "dependencies": {},
   "devDependencies": {
