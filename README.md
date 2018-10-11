@@ -42,28 +42,27 @@ npm run build
 5. test
 6. copydependencies
 
-## Packaging SAM Artifact
-```
-npm run awspackage
-```
-Uses the CloudFormation CLI package command to package the 'dist' folder. The command uploads the packaged artifact to an S3 bucket of the same name as the project. The command outputs a copy of your template to sam-generated.yaml, replacing references to local artifacts with the S3 location where the command uploaded the artifacts.
-
-Use this command to upload your application resources. After you package your template's artifacts, run the deploy command to deploy the returned template.
-```
-npm run awspackage -- --profile <aws-profile-name>
-```
-Runs the package command using the supplied aws profile name.
-
 ## Deploying to AWS
 ```
-npm run awsdeploy
+npm run deploy -- -s <stage> -p <aws-profile-name>
 ```
 Uses the CloudFormation CLI deploy command to deploy the uploaded artifact to the target environment.
 
 ```
-npm run awsdeploy -- --profile <aws-profile-name>
+npm run deploy -- -s dev -p main
 ```
-Runs the deploy command using the supplied aws profile name so you can target a specific account/role.
+Runs the deploy command using the supplied aws profile and stage.
+
+A third argument is automatically supplied ```-n``` the name of the project which defaults to the npm package name.
+
+### Prerequisites
+You will need to have a deployment bucket created in the target account:
+
+```<project name>-deployment-<stage name>```
+
+i.e.
+
+```my-project-deployment-dev```
 
 ## Compiling
 ```
